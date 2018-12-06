@@ -6,8 +6,6 @@ from airflow.hooks.base_hook import BaseHook
 
 import json
 import os
-import pprint
-pp = pprint.PrettyPrinter(indent=4)
 
 class LookerScheduleRunOperator(BaseOperator):
     """
@@ -77,25 +75,14 @@ class LookerScheduleRunOperator(BaseOperator):
         }))
         return json.dumps(template)
 
-
-
     def execute(self,context):
         looker_hook = LookerHook(self.looker_conn_id)
         query = self.load_query(self.table)
         r = looker_hook.create_query(query)
         query_id = r['id']
         schedule_body = self.build_schedule(query_id,self.table)
-        pp.pprint(schedule_body)
-        # r = looker_hook.run_scheduled_plan_once(schedule_body)
-        # print(r)
-        # SCRATCH #
-        # print(self.build_schedule(query_id,self.table))
-        # print(query_id)
-        # bucket = self.load_s3_creds(BaseHook)
-        # print(bucket)
+        r = looker_hook.run_scheduled_plan_once(schedule_body)
 
-
-        # print(r)
 
 class LookerScheduleRunOperatorPlugin(AirflowPlugin):
     name = "looker_schedule_run_plugin"
