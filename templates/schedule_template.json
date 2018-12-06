@@ -1,0 +1,11 @@
+{
+	"scheduled_plan_destination": [{
+		"format": "csv",
+		"apply_formatting": false,
+		"type": "s3"
+	}],
+	"run_once": true,
+	"send_all_results": true,
+	"apply_formatting": false,
+	"apply_vis": false
+}

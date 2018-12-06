@@ -1,0 +1,5 @@
+.DS_store
+*.cfg
+airflow.db
+**/__pycache__
+**/logs

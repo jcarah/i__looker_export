@@ -1,0 +1,11 @@
+{
+  "view": "history",
+	"fields": ["history.cache_key", "history.connection_id", "history.connection_name", "history.created_time", "history.dashboard_session", "history.dialect", "history.id", "history.is_user_dashboard", "history.message", "history.most_recent_run_at_time", "history.most_recent_length", "history.node_id", "history.render_key", "history.result_source", "history.runtime", "history.runtime_tiers", "history.slug", "history.source", "history.status", "history.title", "query.id", "user.id", "history.real_dash_id"],
+  "pivots": null,
+  "fill_fields": null,
+  "filters": null,
+  "filter_expression": null,
+  "sorts": ["history.created_time desc"],
+  "limit": "500",
+  "model": "i__looker"
+}
