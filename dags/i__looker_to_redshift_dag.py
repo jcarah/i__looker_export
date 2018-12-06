@@ -14,7 +14,7 @@ default_args = {
     'retry_delay': dt.timedelta(minutes=5)
 }
 
-dag = DAG('s3-to-redshift',
+dag = DAG('i__looker-to-redshift',
     default_args=default_args,
     schedule_interval='@once'
 )
