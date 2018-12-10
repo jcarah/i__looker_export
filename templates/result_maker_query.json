@@ -1,0 +1,17 @@
+{
+    "view": "history",
+    "fields": [
+        "result_maker.id",
+        "result_maker.is_merge_query",
+        "result_maker.is_query",
+        "result_maker.merge_query_id",
+        "result_maker.query_id"
+    ],
+    "pivots": null,
+    "fill_fields": null,
+    "filters": null,
+    "filter_expression": null,
+    "sorts": null,
+    "limit": "500",
+    "model": "system__activity"
+}

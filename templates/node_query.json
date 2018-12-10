@@ -1,0 +1,11 @@
+{
+        "view": "history",
+        "fields": ["node.cache_port","node.clustered","node.hostname","node.id","node.is_master","node.last_heartbeat_time","node.mac_adress","node.node_cluster_version","node.node_to_node_port","node.port","node.prev_node_id","node.queue_broker_port","node.version"],
+        "pivots": null,
+        "fill_fields": null,
+        "filters": null,
+        "filter_expression": null,
+        "sorts": null,
+        "limit": "500",
+        "model": "system__activity"
+}
