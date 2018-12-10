@@ -1,0 +1,23 @@
+{
+    "view": "history",
+    "fields": [
+        "sql_query.connection_id",
+        "sql_query.created_time",
+        "sql_query.hash",
+        "sql_query.id",
+        "sql_query.last_run_time",
+        "sql_query.last_runtime",
+        "sql_query.result_set_metadata",
+        "sql_query.run_count",
+        "sql_query.slug",
+        "sql_query.sql",
+        "sql_query.user_id"
+    ],
+    "pivots": null,
+    "fill_fields": null,
+    "filters": null,
+    "filter_expression": null,
+    "sorts": null,
+    "limit": "500",
+    "model": "system__activity"
+}

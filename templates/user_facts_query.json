@@ -1,0 +1,26 @@
+{
+        "view": "history",
+        "fields": [
+            "user_facts.active_api_sessions",
+            "user_facts.active_ui_sessions",
+            "user_facts.external_id",
+            "user_facts.has_api_credentials",
+            "user_facts.has_ui_credentials",
+            "user_facts.id",
+            "user_facts.is_admin",
+            "user_facts.is_developer",
+            "user_facts.is_embed",
+            "user_facts.is_explorer",
+            "user_facts.last_api_login_time",
+            "user_facts.last_ui_login_credential_type",
+            "user_facts.last_ui_login_time",
+            "user_facts.user_id"
+        ],
+        "pivots": null,
+        "fill_fields": null,
+        "filters": null,
+        "filter_expression": null,
+        "sorts": null,
+        "limit": "500",
+        "model": "system__activity"
+}

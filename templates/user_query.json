@@ -1,0 +1,25 @@
+{
+        "view": "history",
+        "fields": [
+            "user.created_time",
+            "user.dev_branch_name",
+            "user.edit_link",
+            "user.email",
+            "user.external_avatar_url",
+            "user.first_name",
+            "user.home_space_id",
+            "user.id",
+            "user.is_disabled",
+            "user.is_looker",
+            "user.last_name",
+            "user.name",
+            "user.timezone"
+        ],
+        "pivots": null,
+        "fill_fields": null,
+        "filters": null,
+        "filter_expression": null,
+        "sorts": null,
+        "limit": "500",
+        "model": "system__activity"
+}
