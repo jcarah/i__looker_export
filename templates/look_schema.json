@@ -1,0 +1,54 @@
+[
+    {
+        "name": "created_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "deleted_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "deleter_id",
+        "type": "bigint"
+    },
+    {
+        "name": "description",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "id",
+        "type": "bigint"
+    },
+    {
+        "name": "is_run_on_load",
+        "type": "boolean"
+    },
+    {
+        "name": "last_updater_id",
+        "type": "bigint"
+    },
+    {
+        "name": "link",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "public",
+        "type": "boolean"
+    },
+    {
+        "name": "public_embed_link",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "public_slug",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "title",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "updated_time",
+        "type": "timestamp without time zone"
+    }
+]
