@@ -1,0 +1,162 @@
+[
+    {
+        "name": "apply_formatting",
+        "type": "boolean"
+    },
+    {
+        "name": "apply_vis",
+        "type": "boolean"
+    },
+    {
+        "name": "cache",
+        "type": "boolean"
+    },
+    {
+        "name": "cache_key",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "cache_only",
+        "type": "boolean"
+    },
+    {
+        "name": "completed_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "connection_id",
+        "type": "bigint"
+    },
+    {
+        "name": "connection_name",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "created_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "dashboard_session",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "dialect",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "force_production",
+        "type": "boolean"
+    },
+    {
+        "name": "generate_links",
+        "type": "boolean"
+    },
+    {
+        "name": "id",
+        "type": "bigint"
+    },
+    {
+        "name": "is_user_dashboard",
+        "type": "boolean"
+    },
+    {
+        "name": "issuer_source",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "message",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "most_recent_run_at_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "most_recent_length",
+        "type": "double precision"
+    },
+    {
+        "name": "real_dash_id",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "rebuild_pdts",
+        "type": "boolean"
+    },
+    {
+        "name": "render_key",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "result_format",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "result_maker_id",
+        "type": "bigint"
+    },
+    {
+        "name": "result_source",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "runtime",
+        "type": "double precision"
+    },
+    {
+        "name": "runtime_tiers_1",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "runtime_tiers_5",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "runtime_tiers",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "server_table_calcs",
+        "type": "boolean"
+    },
+    {
+        "name": "slug",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "source",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "status",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "title",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "workspace_id",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "look_id",
+        "type": "bigint"
+    },
+    {
+        "name": "node_id",
+        "type": "bigint"
+    },
+    {
+        "name": "query_id",
+        "type": "bigint"
+    },
+    {
+        "name": "sql_query_id",
+        "type": "bigint"
+    },
+    {
+        "name": "user_id",
+        "type": "bigint"
+    }
+]

@@ -1,0 +1,42 @@
+[
+    {
+        "name": "column_limit",
+        "type": "bigint"
+    },
+    {
+        "name": "created_date",
+        "type": ""
+    },
+    {
+        "name": "created_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "hash",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "id",
+        "type": "bigint"
+    },
+    {
+        "name": "formatted_pivots",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "sorts",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "dynamic_fields",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "total",
+        "type": "boolean"
+    },
+    {
+        "name": "vis_config",
+        "type": "character varying(128)"
+    }
+]

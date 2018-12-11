@@ -1,0 +1,54 @@
+[
+    {
+        "name": "cache_port",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "clustered",
+        "type": "boolean"
+    },
+    {
+        "name": "hostname",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "id",
+        "type": "bigint"
+    },
+    {
+        "name": "is_master",
+        "type": "boolean"
+    },
+    {
+        "name": "last_heartbeat_time",
+        "type": "timezone without time stamp"
+    },
+    {
+        "name": "mac_adress",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "node_cluster_version",
+        "type": "bigint"
+    },
+    {
+        "name": "node_to_node_port",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "port",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "prev_node_id",
+        "type": "bigint"
+    },
+    {
+        "name": "queue_broker_port",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "version",
+        "type": "character varying(128)"
+    }
+]

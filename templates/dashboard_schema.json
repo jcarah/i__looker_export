@@ -1,0 +1,42 @@
+[
+    {
+        "name": "created_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "deleted_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "description",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "hidden",
+        "type": "boolean"
+    },
+    {
+        "name": "history_real_dash_id",
+        "type": "bigint"
+    },
+    {
+        "name": "id",
+        "type": "bigint"
+    },
+    {
+        "name": "link",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "refresh_interval",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "run_on_load",
+        "type": "boolean"
+    },
+    {
+        "name": "title",
+        "type": "character varying(128)"
+    }
+]
