@@ -1,0 +1,22 @@
+[
+    {
+        "name": "id",
+        "type": "bigint"
+    },
+    {
+        "name": "is_merge_query",
+        "type": "boolean"
+    },
+    {
+        "name": "is_query",
+        "type": "boolean"
+    },
+    {
+        "name": "merge_query_id",
+        "type": "bigint"
+    },
+    {
+        "name": "query_id",
+        "type": "bigint"
+    }
+]

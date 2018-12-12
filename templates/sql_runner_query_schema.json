@@ -1,0 +1,46 @@
+[
+    {
+        "name": "connection_id",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "created_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "hash",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "id",
+        "type": "bigint"
+    },
+    {
+        "name": "last_run_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "last_runtime",
+        "type": "double precision"
+    },
+    {
+        "name": "result_set_metadata",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "run_count",
+        "type": "bigint"
+    },
+    {
+        "name": "slug",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "sql",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "user_id",
+        "type": "bigint"
+    }
+]

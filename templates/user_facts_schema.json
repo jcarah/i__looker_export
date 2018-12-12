@@ -1,0 +1,58 @@
+[
+    {
+        "name": "active_api_sessions",
+        "type": "bigint"
+    },
+    {
+        "name": "active_ui_sessions",
+        "type": "bigint"
+    },
+    {
+        "name": "external_id",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "has_api_credentials",
+        "type": "boolean"
+    },
+    {
+        "name": "has_ui_credentials",
+        "type": "boolean"
+    },
+    {
+        "name": "id",
+        "type": "boolean"
+    },
+    {
+        "name": "is_admin",
+        "type": "boolean"
+    },
+    {
+        "name": "is_developer",
+        "type": "boolean"
+    },
+    {
+        "name": "is_embed",
+        "type": "boolean"
+    },
+    {
+        "name": "is_explorer",
+        "type": "boolean"
+    },
+    {
+        "name": "last_api_login_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "last_ui_login_credential_type",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "last_ui_login_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "user_id",
+        "type": "bigint"
+    }
+]

@@ -1,0 +1,54 @@
+[
+    {
+        "name": "created_time",
+        "type": "timestamp without time zone"
+    },
+    {
+        "name": "dev_branch_name",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "edit_link",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "email",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "external_avatar_url",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "first_name",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "home_space_id",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "id",
+        "type": "bigint"
+    },
+    {
+        "name": "is_disabled",
+        "type": "boolean"
+    },
+    {
+        "name": "is_looker",
+        "type": "boolean"
+    },
+    {
+        "name": "last_name",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "name",
+        "type": "character varying(128)"
+    },
+    {
+        "name": "timezone",
+        "type": "character varying(128)"
+    }
+]
