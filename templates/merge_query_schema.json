@@ -4,10 +4,6 @@
         "type": "bigint"
     },
     {
-        "name": "created_date",
-        "type": ""
-    },
-    {
         "name": "created_time",
         "type": "timestamp without time zone"
     },

@@ -9,7 +9,7 @@
     },
     {
         "name": "created_time",
-        "type": "timezone without time stamp"
+        "type": "timestamp without time zone"
     },
     {
         "name": "view",

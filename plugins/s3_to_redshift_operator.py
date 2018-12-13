@@ -2,6 +2,7 @@ import json
 import random
 import string
 import logging
+import os
 
 from airflow.utils.db import provide_session
 from airflow.models import Connection
@@ -175,8 +176,12 @@ class S3ToRedshiftOperator(BaseOperator):
                           .get()['Body'].read().decode('utf-8'))
                 schema = json.loads(schema.replace("'", '"'))
         else:
-            schema = self.origin_schema
-
+            # schema = self.origin_schema
+            dirname = os.path.dirname(__file__)
+            filepath = os.path.join(dirname,self.origin_schema)
+            file = open(filepath)
+            schema = json.loads(file.read())
+            file.close()
         return schema
 
     def reconcile_schemas(self, schema, pg_hook):

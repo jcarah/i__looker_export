@@ -9,7 +9,3 @@
         "limit": "500",
         "model": "system__activity"
 }
-
-// missing 
-// ${merge_query_source_query.merge_query_id} for merge_query_source_query JOIN
-// AND ${merge_query_source_query.query_id} for source_query JOIN

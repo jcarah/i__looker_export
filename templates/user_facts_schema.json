@@ -21,7 +21,7 @@
     },
     {
         "name": "id",
-        "type": "boolean"
+        "type": "bigint"
     },
     {
         "name": "is_admin",

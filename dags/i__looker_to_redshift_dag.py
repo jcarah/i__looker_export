@@ -20,7 +20,10 @@ dag = DAG('i__looker-to-redshift',
 )
 
 # tables = ['history', 'event']
-tables = ['history']
+# put history back
+tables = [ 'history', 'look','node', 'user_facts'
+, 'merge_query', 'query', 'source_query', 'user', 'merge_query_source_query',
+'result_maker','sql_runner_query']
 
 for table in tables:
     build_schedule = LookerScheduleRunOperator(
@@ -67,11 +70,13 @@ for table in tables:
                       "TRUNCATECOLUMNS",
                       "region as 'us-east-1'",
                       "IGNOREHEADER 1"],
-        origin_schema='{0}/{0}_schema.json'.format(table),
-        schema_location='s3',
+        origin_schema='../templates/{0}_schema.json'.format(table),
+        schema_location='local',
         dag=dag
         )
 
     build_schedule >> sense_s3_key >> rename >> load
+    # build_schedule >> sense_s3_key >> rename
+
 
 # rename
