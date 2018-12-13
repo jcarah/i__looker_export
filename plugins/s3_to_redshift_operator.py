@@ -39,8 +39,7 @@ class S3ToRedshiftOperator(BaseOperator):
     :param schema_location:         The location of the origin schema. This
                                     can be set to 'S3' or 'Local'.
                                     If 'S3', it will expect a valid S3 Key. If
-                                    'Local', it will expect a dictionary that
-                                    is defined in the operator itself. By
+                                    'Local', it will expect a local file location. By
                                     default the location is set to 's3'.
     :type schema_location:          string
     :param load_type:               The method of loading into Redshift that
