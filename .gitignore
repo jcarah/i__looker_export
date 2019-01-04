@@ -5,3 +5,4 @@ airflow.db
 **/logs
 **/scheduler
 airflow-webserver.pid
+test_dag.py

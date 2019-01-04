@@ -10,8 +10,6 @@ class S3KeyRenameOperator(BaseOperator):
     :type s3_conn_id:               string
     :param s3_bucket:               The source s3 bucket.
     :type s3_bucket:                string
-    :param s3_key:                  The source s3 key.
-    :type s3_key:                   string
     :param table:                   The base table name.
     :type table:                    string
     """
@@ -20,32 +18,47 @@ class S3KeyRenameOperator(BaseOperator):
     def __init__(self,
                  s3_conn_id,
                  s3_bucket,
-                 s3_key,
-                 # table,
+                 table,
                  *args,
                  **kwargs):
         super().__init__(*args, **kwargs)
         self.s3_conn_id = s3_conn_id
         self.s3_bucket = s3_bucket
-        self.s3_key = s3_key
-        # self.table = table
+        self.table = table
 
     def execute(self, context):
-        key_prefix = self.s3_key.split('.')[0]
-        key_extension = self.s3_key.split('.')[1]
-        hook = S3Hook(self.s3_conn_id)
-        # grab all keys and sort them chronologically (based off name)
-        # the 0th positioned key will by our base key
-        keys = sorted([key for key in hook.list_keys(bucket_name=self.s3_bucket,
-                                                prefix=key_prefix)
-                                            if  key.endswith(key_extension)])
-        print(keys)
-        newest_key = keys[len(keys) - 1]
-        if len(keys) >= 5:
-            # prune bucket of oldest csv
-            hook.delete_objects(self.s3_bucket, keys[1])
+        key_prefix = self.table + '_2' # this reflects Looker's naming convention
+        s3_hook = S3Hook(self.s3_conn_id)
+        # evaluate if the export exists in the specified s3 bucket
+        try:
+            target_key = sorted(s3_hook.list_keys(
+                                        bucket_name=self.s3_bucket,
+                                        prefix='{0}/{1}'.format(self.table,
+                                        key_prefix)))[0]
+        except:
+            print('Error: File does not exist in specified S3 bucket.')
+        # strips Looker metadata and returns a stable filename
+        renamed_key = self.table  + '.csv'
         # replace the base key with the newest version of the table
-        hook.copy_object(newest_key, self.s3_key, self.s3_bucket, self.s3_bucket)
+        s3_hook.copy_object(target_key,
+                            renamed_key,
+                            self.s3_bucket,
+                            self.s3_bucket)
+        # create a separate copy for archival puposes
+        archived_key =  '/archive_'.join(target_key.split('/'))
+        s3_hook.copy_object(target_key,
+                            archived_key,
+                            self.s3_bucket,
+                            self.s3_bucket)
+        s3_hook.delete_objects(self.s3_bucket,
+                               target_key)
+        # prune old archives
+        archives = sorted(s3_hook.list_keys(bucket_name=self.s3_bucket,
+                                prefix='{0}/archive_{1}'.format(self.table,
+                                                                key_prefix)))
+        if len(archives) >= 5:
+            s3_hook.delete_objects(self.s3_bucket, archives[0])
+
 
 class S3KeyRenameOperatorPlugin(AirflowPlugin):
     name = "s3_key_rename_plugin"

@@ -19,11 +19,12 @@ dag = DAG('i__looker-to-redshift',
     schedule_interval='@once'
 )
 
-# tables = ['history', 'event']
-# put history back
-tables = [ 'history', 'look','node', 'user_facts'
-, 'merge_query', 'query', 'source_query', 'user', 'merge_query_source_query',
-'result_maker','sql_runner_query']
+
+
+# tables = [ 'history', 'look','node', 'user_facts'
+# , 'merge_query', 'query', 'source_query', 'user', 'merge_query_source_query',
+# 'result_maker','sql_runner_query']
+tables = ['user']
 
 for table in tables:
     build_schedule = LookerScheduleRunOperator(
@@ -38,7 +39,7 @@ for table in tables:
         verify=False,
         wildcard_match=True,
         aws_conn_id='s3',
-        bucket_name='jessecarah',
+        bucket_name='jessecarah', # refactor to use meta data from connection
         bucket_key='{0}/{0}_{1}*'.format(table, time.strftime('%Y-%m-%d')),
         timeout=18*60*60,
         poke_interval=30,
@@ -48,11 +49,10 @@ for table in tables:
     rename = S3KeyRenameOperator(
         task_id='{0}_rename'.format(table),
         s3_conn_id='s3',
-        s3_bucket='jessecarah',
-        s3_key='{0}/{0}.csv'.format(table),
+        s3_bucket='jessecarah', # refactor to use meta data from connection
+        table=table,
         dag=dag
         )
-
 
     load = S3ToRedshiftOperator(
         task_id='{0}_load'.format(table),
@@ -76,7 +76,4 @@ for table in tables:
         )
 
     build_schedule >> sense_s3_key >> rename >> load
-    # build_schedule >> sense_s3_key >> rename
-
-
-# rename
+    
