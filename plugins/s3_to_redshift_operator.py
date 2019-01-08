@@ -108,7 +108,7 @@ class S3ToRedshiftOperator(BaseOperator):
                  sort_type='COMPOUND',
                  *args,
                  **kwargs):
-        super(S3ToRedshiftOperator).__init__(*args, **kwargs)
+        super(S3ToRedshiftOperator, self).__init__(*args, **kwargs)
         self.s3_conn_id = s3_conn_id
         self.s3_bucket = s3_bucket
         self.s3_key = s3_key

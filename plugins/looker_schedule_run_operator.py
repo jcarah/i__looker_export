@@ -16,7 +16,7 @@ class LookerScheduleRunOperator(BaseOperator):
 
     @apply_defaults
     def __init__(self,looker_conn_id,table,*args,**kwargs):
-        super(LookerScheduleRunOperator).__init__(*args, **kwargs)
+        super(LookerScheduleRunOperator, self).__init__(*args, **kwargs)
         self.looker_conn_id = looker_conn_id
         self.table = table
         # self.s3_conn_id = s3_conn_id

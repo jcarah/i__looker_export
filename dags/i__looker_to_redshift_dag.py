@@ -64,38 +64,38 @@ tables = [
           }
          ]
 
-# tables = [{
-#           "name": "user",
-#           "replication": "rebuild"
-#          }]
+tables = [{
+          "name": "user",
+          "replication": "rebuild"
+         }]
 
 for table in tables:
-    # build_schedule = LookerScheduleRunOperator(
-    #     task_id='{0}_schedule_build'.format(table['name']),
-    #     looker_conn_id='looker_api',
-    #     table=table['name'],
-    #     dag=dag
-    #     )
-    #
-    # sense_s3_key =  S3KeySensor(
-    #     task_id='{0}_sense'.format(table['name']),
-    #     verify=False,
-    #     wildcard_match=True,
-    #     aws_conn_id='s3',
-    #     bucket_name='jessecarah', # refactor to use meta data from connection
-    #     bucket_key='{0}/{0}_{1}*'.format(table['name'], time.strftime('%Y-%m-%d')),
-    #     timeout=18*60*60,
-    #     poke_interval=15,
-    #     dag=dag
-    #     )
-    #
-    # rename = S3KeyRenameOperator(
-    #     task_id='{0}_rename'.format(table['name']),
-    #     s3_conn_id='s3',
-    #     s3_bucket='jessecarah', # refactor to use meta data from connection
-    #     table=table['name'],
-    #     dag=dag
-    #     )
+    build_schedule = LookerScheduleRunOperator(
+        task_id='{0}_schedule_build'.format(table['name']),
+        looker_conn_id='looker_api',
+        table=table['name'],
+        dag=dag
+        )
+
+    sense_s3_key =  S3KeySensor(
+        task_id='{0}_sense'.format(table['name']),
+        verify=False,
+        wildcard_match=True,
+        aws_conn_id='s3',
+        bucket_name='jessecarah', # refactor to use meta data from connection
+        bucket_key='{0}/{0}_{1}*'.format(table['name'], time.strftime('%Y-%m-%d')),
+        timeout=18*60*60,
+        poke_interval=15,
+        dag=dag
+        )
+
+    rename = S3KeyRenameOperator(
+        task_id='{0}_rename'.format(table['name']),
+        s3_conn_id='s3',
+        s3_bucket='jessecarah', # refactor to use meta data from connection
+        table=table['name'],
+        dag=dag
+        )
 
     load = S3ToRedshiftOperator(
         task_id='{0}_load'.format(table['name']),
@@ -110,7 +110,7 @@ for table in tables:
                       "STATUPDATE OFF",
                       "FORMAT as CSV",
                       "TIMEFORMAT 'auto'",
-                      "BLANKASNULL",
+                      "BLANKSASNULL",
                       "TRUNCATECOLUMNS",
                       "region as 'us-east-1'",
                       "IGNOREHEADER 1"],
@@ -121,5 +121,5 @@ for table in tables:
         dag=dag
         )
 
-    # build_schedule >> sense_s3_key >> rename >> load
-    load
+    build_schedule >> sense_s3_key >> rename >> load
+    # load
