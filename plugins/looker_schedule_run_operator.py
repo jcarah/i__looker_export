@@ -31,7 +31,7 @@ class LookerScheduleRunOperator(BaseOperator):
          try:
              dirname = os.path.dirname(__file__)
              filepath = os.path.join(dirname,'../templates/{}_query.json'
-                                                        .format(table))
+                                    .format(table))
              file = open(filepath)
              query = file.read()
              file.close()
@@ -64,15 +64,15 @@ class LookerScheduleRunOperator(BaseOperator):
         template['name'] = table
         template['query_id'] = query_id
         template['scheduled_plan_destination'][0]['address'] = '{}/{}/'.format(
-                                                                    s3_creds['bucket'],
-                                                                    table)
+            s3_creds['bucket'],
+            table)
         template['scheduled_plan_destination'][0]['parameters'] = str(json.dumps({
-                                "region":s3_creds['region'],
-                                "access_key_id":s3_creds['aws_access_key_id']
-                                }))
+                "region":s3_creds['region'],
+                "access_key_id":s3_creds['aws_access_key_id']
+                }))
         template['scheduled_plan_destination'][0]['secret_parameters'] = str(json.dumps({
-                                "secret_access_key":s3_creds['aws_secret_access_key']
-        }))
+            "secret_access_key":s3_creds['aws_secret_access_key']
+            }))
         return json.dumps(template)
 
     def execute(self,context):

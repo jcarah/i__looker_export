@@ -38,7 +38,7 @@ class S3KeyRenameOperator(BaseOperator):
         except:
             print('Error: File does not exist in specified S3 bucket.')
         # strips Looker metadata and returns a stable filename
-        renamed_key = self.table  + '.csv'
+        renamed_key = '{0}/{0}.csv'.format(self.table)
         # replace the base key with the newest version of the table
         s3_hook.copy_object(target_key,
                             renamed_key,
@@ -54,8 +54,8 @@ class S3KeyRenameOperator(BaseOperator):
                                target_key)
         # prune old archives
         archives = sorted(s3_hook.list_keys(bucket_name=self.s3_bucket,
-                                prefix='{0}/archive_{1}'.format(self.table,
-                                                                key_prefix)))
+                         prefix='{0}/archive_{1}'.format(self.table,
+                                                         key_prefix)))
         if len(archives) >= 5:
             s3_hook.delete_objects(self.s3_bucket, archives[0])
 
