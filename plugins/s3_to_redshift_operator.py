@@ -108,7 +108,7 @@ class S3ToRedshiftOperator(BaseOperator):
                  sort_type='COMPOUND',
                  *args,
                  **kwargs):
-        super().__init__(*args, **kwargs)
+        super(S3ToRedshiftOperator).__init__(*args, **kwargs)
         self.s3_conn_id = s3_conn_id
         self.s3_bucket = s3_bucket
         self.s3_key = s3_key
@@ -329,6 +329,7 @@ class S3ToRedshiftOperator(BaseOperator):
                                                      self.table,
                                                      base_sql)
         if self.load_type == 'append':
+            self.create_if_not_exists(schema, pg_hook)
             pg_hook.run(load_sql)
         elif self.load_type == 'rebuild':
             pg_hook.run(drop_sql)

@@ -21,7 +21,7 @@ class S3KeyRenameOperator(BaseOperator):
                  table,
                  *args,
                  **kwargs):
-        super().__init__(*args, **kwargs)
+        super(S3KeyRenameOperator).__init__(*args, **kwargs)
         self.s3_conn_id = s3_conn_id
         self.s3_bucket = s3_bucket
         self.table = table
