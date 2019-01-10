@@ -24,10 +24,8 @@ class LookerScheduleRunOperator(BaseOperator):
     :type load_type:                    string
     """
 
-
     template_fields = ('since',
                        'until')
-
     @apply_defaults
     def __init__(self,
                 since,
@@ -43,13 +41,6 @@ class LookerScheduleRunOperator(BaseOperator):
         self.looker_conn_id = looker_conn_id
         self.table = table
         self.load_type=load_type
-
-
-    # create a query to run later
-    # def create_looker_query(self,LookerHook, query_body):
-    #     looker_hook = LookerHook(self.looker_conn_id)
-    #     query_body = looker_hook.create_query(self,query_body)
-    #     return query_body
 
     def load_query(self):
         try:
@@ -85,7 +76,8 @@ class LookerScheduleRunOperator(BaseOperator):
     def build_schedule(self,query_id,table):
         try:
             dirname = os.path.dirname(__file__)
-            filepath = os.path.join(dirname,'../templates/schedule_template.json')
+            filepath = os.path.join(dirname,
+                '../templates/schedule_template.json')
             file = open(filepath)
         except IOError:
             print('Error: File, {} does not exist.'.format(filepath))
@@ -98,17 +90,19 @@ class LookerScheduleRunOperator(BaseOperator):
         template['scheduled_plan_destination'][0]['address'] = '{}/{}/'.format(
             s3_creds['bucket'],
             table)
-        template['scheduled_plan_destination'][0]['parameters'] = str(json.dumps({
-                "region":s3_creds['region'],
-                "access_key_id":s3_creds['aws_access_key_id']
-                }))
-        template['scheduled_plan_destination'][0]['secret_parameters'] = str(json.dumps({
-            "secret_access_key":s3_creds['aws_secret_access_key']
+        template['scheduled_plan_destination'][0]['parameters'] = str(
+        json.dumps({
+            "region":s3_creds['region'],
+            "access_key_id":s3_creds['aws_access_key_id']
             }))
+        template['scheduled_plan_destination'][0]['secret_parameters'] = str(
+        json.dumps({
+                "secret_access_key":s3_creds['aws_secret_access_key']
+                }))
         if self.load_type == 'append':
             template['filters'] = {"{0}.created_date".format(self.table):
-                                             "{0} to {1}".format(self.since,
-                                                                 self.until)}
+                                   "{0} to {1}".format(self.since,
+                                                       self.until)}
         return json.dumps(template)
 
 

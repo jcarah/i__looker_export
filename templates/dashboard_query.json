@@ -1,6 +1,6 @@
 {
-    "view": "history",
-        "fields": ["dashboard.created_time","dashboard.deleted_time","dashboard.description","dashboard.hidden","history.real_dash_id","dashboard.id","dashboard.link","dashboard.refresh_interval","dashboard.run_on_load","dashboard.title"],
+    "view": "dashboard",
+        "fields": ["dashboard.created_time","dashboard.deleted_time","dashboard.description","dashboard.hidden","dashboard.id","dashboard.link","dashboard.refresh_interval","dashboard.run_on_load","dashboard.title"],
     "pivots": null,
     "fill_fields": null,
     "filters": null,

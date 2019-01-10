@@ -1,5 +1,5 @@
 {
-        "view": "history",
+        "view": "user",
         "fields": [
             "user_facts.active_api_sessions",
             "user_facts.active_ui_sessions",

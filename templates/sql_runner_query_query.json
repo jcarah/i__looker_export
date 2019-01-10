@@ -1,5 +1,5 @@
 {
-    "view": "history",
+    "view": "sql_query",
     "fields": [
         "sql_query.connection_id",
         "sql_query.created_time",

@@ -1,5 +1,5 @@
 {
-        "view": "history",
+        "view": "merge_query",
             "fields": ["merge_query.column_limit","merge_query.created_time","merge_query.hash","merge_query.id","merge_query.formatted_pivots","merge_query.sorts","merge_query.dynamic_fields","merge_query.total","merge_query.vis_config"],
         "pivots": null,
         "fill_fields": null,

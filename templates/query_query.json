@@ -1,5 +1,5 @@
 {
-    "view": "history",
+    "view": "query",
         "fields": [
             "query.client_id",
             "query.column_limit",

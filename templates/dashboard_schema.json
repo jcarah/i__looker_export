@@ -16,10 +16,6 @@
         "type": "boolean"
     },
     {
-        "name": "history_real_dash_id",
-        "type": "bigint"
-    },
-    {
         "name": "id",
         "type": "bigint"
     },

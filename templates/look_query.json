@@ -1,5 +1,5 @@
 {
-    "view": "history",
+    "view": "look",
         "fields": ["look.created_time","look.deleted_time","look.deleter_id","look.description","look.id","look.is_run_on_load","look.last_updater_id","look.link","look.public","look.public_embed_link","look.public_slug","look.title","look.updated_time"],
     "pivots": null,
     "fill_fields": null,

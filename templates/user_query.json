@@ -1,5 +1,5 @@
 {
-        "view": "history",
+        "view": "user",
         "fields": [
             "user.created_time",
             "user.dev_branch_name",

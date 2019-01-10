@@ -1,5 +1,5 @@
 {
-        "view": "history",
+        "view": "result_maker_lookup",
         "fields": [
             "source_query.client_id",
             "source_query.column_limit",
