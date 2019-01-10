@@ -9,14 +9,15 @@ from airflow import DAG
 
 default_args = {
     'owner': 'Jesse Carah',
-    'start_date': dt.datetime(2018, 11, 20),
+    'start_date': dt.datetime(2019, 1, 1),
     'retries': 2,
     'retry_delay': dt.timedelta(minutes=5)
 }
 
 dag = DAG('i__looker-to-redshift',
     default_args=default_args,
-    schedule_interval='@once'
+    schedule_interval='@once',
+    catchup=True
 )
 
 
@@ -26,10 +27,10 @@ dag = DAG('i__looker-to-redshift',
 # 'result_maker','sql_runner_query']
 # tables = ['user']
 tables = [
-          # {
-          #   "name": "history",
-          #   "replication": "append"
-          # },
+          {
+            "name": "history",
+            "replication": "append"
+          },
            {
             "name": "look",
             "replication": "rebuild"
@@ -64,16 +65,22 @@ tables = [
           }
          ]
 
-tables = [{
-          "name": "user",
-          "replication": "rebuild"
-         }]
+# tables = [{
+#           "name": "user",
+#           "replication": "rebuild"
+#          }]
+
+since = "{{ ds }}".replace('-','/')
+until = "{{ yesterday_ds }}".replace('-','/')
 
 for table in tables:
     build_schedule = LookerScheduleRunOperator(
         task_id='{0}_schedule_build'.format(table['name']),
         looker_conn_id='looker_api',
+        load_type=table['replication'],
         table=table['name'],
+        since=since,
+        until=until,
         dag=dag
         )
 
@@ -102,7 +109,7 @@ for table in tables:
         s3_conn_id='s3',
         s3_bucket='jessecarah',
         s3_key='{0}/{0}.csv'.format(table['name']),
-        load_type='rebuild',
+        load_type=table['replication'],
         redshift_conn_id='redshift',
         redshift_schema='airflow',
         table=table['name'],
@@ -117,7 +124,6 @@ for table in tables:
         origin_schema='../templates/{0}_schema.json'.format(table['name']),
         schema_location='local',
         incremental_key='id' if table['replication'] == 'append' else None,
-        # primary_key='id',
         dag=dag
         )
 

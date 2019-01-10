@@ -12,14 +12,41 @@ class LookerScheduleRunOperator(BaseOperator):
     LookerScheuleRun
     :param looker_conn_id:              The source s3 connection id.
     :type looker_conn_id:               string
+    :param table                        The name of the destination table.
+    :type                               string
+    :param load_type:                   The method of loading into Redshift that
+                                        should occur. Options:
+                                            - "append"
+                                            - "rebuild"
+                                            - "truncate"
+                                            - "upsert"
+                                        Defaults to "append."
+    :type load_type:                    string
     """
 
+
+
+
+    template_fields = ('since',
+                       'until')
+
     @apply_defaults
-    def __init__(self,looker_conn_id,table,*args,**kwargs):
+    def __init__(self,
+                since,
+                until,
+                looker_conn_id,
+                table,
+                load_type,
+                *args,
+                **kwargs):
         super(LookerScheduleRunOperator, self).__init__(*args, **kwargs)
+        self.since=since
+        self.until=until
         self.looker_conn_id = looker_conn_id
         self.table = table
-        # self.s3_conn_id = s3_conn_id
+        self.load_type=load_type
+
+
 
     # create a query to run later
     def create_looker_query(self,LookerHook, query_body):
@@ -73,6 +100,10 @@ class LookerScheduleRunOperator(BaseOperator):
         template['scheduled_plan_destination'][0]['secret_parameters'] = str(json.dumps({
             "secret_access_key":s3_creds['aws_secret_access_key']
             }))
+        if self.load_type == 'incremental':
+            template['filter_expression'] = {"{0}.created_date".format(self.table):
+                                             "{0} to {1}".format(self.since,
+                                                                 self.until)}
         return json.dumps(template)
 
     def execute(self,context):
