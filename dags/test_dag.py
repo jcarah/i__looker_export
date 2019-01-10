@@ -7,8 +7,8 @@ from airflow.operators.looker_schedule_run_plugin import LookerScheduleRunOperat
 
 from airflow import DAG
 
-since = "{{ ds }}".replace('-','/')
-until = "{{ yesterday_ds }}".replace('-','/')
+since = "{{ yesterday_ds }}".replace('-','/')
+until = "{{ ds }}".replace('-','/')
 
 
 default_args = {
@@ -20,14 +20,14 @@ default_args = {
 
 dag = DAG('looker_test',
     default_args=default_args,
-    schedule_interval='@once'
+    schedule_interval='@daily'
 )
 
 get_dashboard = LookerScheduleRunOperator(
     task_id='testy_run',
     looker_conn_id='looker_api',
-    table='history',
-    load_type='incremental',
+    table='query',
+    load_type='append',
     since=since,
     until=until,
     dag=dag

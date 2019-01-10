@@ -25,8 +25,6 @@ class LookerScheduleRunOperator(BaseOperator):
     """
 
 
-
-
     template_fields = ('since',
                        'until')
 
@@ -47,24 +45,31 @@ class LookerScheduleRunOperator(BaseOperator):
         self.load_type=load_type
 
 
-
     # create a query to run later
     def create_looker_query(self,LookerHook, query_body):
         looker_hook = LookerHook(self.looker_conn_id)
         query_body = looker_hook.create_query(self,query_body)
         return query_body
 
-    def load_query(self,table):
-         try:
-             dirname = os.path.dirname(__file__)
-             filepath = os.path.join(dirname,'../templates/{}_query.json'
-                                    .format(table))
-             file = open(filepath)
-             query = file.read()
-             file.close()
-             return query
-         except IOError:
-             print('Error: File, {} does not exist.'.format(filepath))
+    def load_query(self):
+        try:
+            dirname = os.path.dirname(__file__)
+            filepath = os.path.join(dirname,'../templates/{}_query.json'
+                                .format(self.table))
+            file = open(filepath)
+            query = file.read()
+            file.close()
+        except IOError:
+            print('Error: File, {} does not exist.'.format(filepath))
+        return query
+
+    def apply_filters(self,query):
+        if self.load_type == 'append':
+            query_body = json.loads(query)
+            query_body['filters'] = {"{0}.created_date".format(self.table):
+                                             "{0} to {1}".format(self.since,
+                                                                 self.until)}
+        return json.dumps(query_body)
 
 
     def load_s3_creds(self,BaseHook):
@@ -100,15 +105,16 @@ class LookerScheduleRunOperator(BaseOperator):
         template['scheduled_plan_destination'][0]['secret_parameters'] = str(json.dumps({
             "secret_access_key":s3_creds['aws_secret_access_key']
             }))
-        if self.load_type == 'incremental':
-            template['filter_expression'] = {"{0}.created_date".format(self.table):
+        if self.load_type == 'append':
+            template['filters'] = {"{0}.created_date".format(self.table):
                                              "{0} to {1}".format(self.since,
                                                                  self.until)}
         return json.dumps(template)
 
+
     def execute(self,context):
         looker_hook = LookerHook(self.looker_conn_id)
-        query = self.load_query(self.table)
+        query = self.apply_filters(self.load_query())
         r = looker_hook.create_query(query)
         query_id = r['id']
         schedule_body = self.build_schedule(query_id,self.table)

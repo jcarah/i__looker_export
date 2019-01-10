@@ -27,10 +27,10 @@ dag = DAG('i__looker-to-redshift',
 # 'result_maker','sql_runner_query']
 # tables = ['user']
 tables = [
-          {
-            "name": "history",
-            "replication": "append"
-          },
+          # {
+          #   "name": "history",
+          #   "replication": "append"
+          # },
            {
             "name": "look",
             "replication": "rebuild"
@@ -70,8 +70,8 @@ tables = [
 #           "replication": "rebuild"
 #          }]
 
-since = "{{ ds }}".replace('-','/')
-until = "{{ yesterday_ds }}".replace('-','/')
+since = "{{ yesterday_ds }}".replace('-','/')
+until = "{{ ds }}".replace('-','/')
 
 for table in tables:
     build_schedule = LookerScheduleRunOperator(
