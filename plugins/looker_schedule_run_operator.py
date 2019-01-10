@@ -46,10 +46,10 @@ class LookerScheduleRunOperator(BaseOperator):
 
 
     # create a query to run later
-    def create_looker_query(self,LookerHook, query_body):
-        looker_hook = LookerHook(self.looker_conn_id)
-        query_body = looker_hook.create_query(self,query_body)
-        return query_body
+    # def create_looker_query(self,LookerHook, query_body):
+    #     looker_hook = LookerHook(self.looker_conn_id)
+    #     query_body = looker_hook.create_query(self,query_body)
+    #     return query_body
 
     def load_query(self):
         try:
@@ -64,12 +64,12 @@ class LookerScheduleRunOperator(BaseOperator):
         return query
 
     def apply_filters(self,query):
+        query = json.loads(query)
         if self.load_type == 'append':
-            query_body = json.loads(query)
-            query_body['filters'] = {"{0}.created_date".format(self.table):
+            query['filters'] = {"{0}.created_date".format(self.table):
                                              "{0} to {1}".format(self.since,
                                                                  self.until)}
-        return json.dumps(query_body)
+        return json.dumps(query)
 
 
     def load_s3_creds(self,BaseHook):
