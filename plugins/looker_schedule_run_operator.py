@@ -56,10 +56,10 @@ class LookerScheduleRunOperator(BaseOperator):
 
     def apply_filters(self,query):
         query = json.loads(query)
-        if self.load_type == 'append':
+        if self.load_type in ('append','upsert'):
             query['filters'] = {"{0}.created_date".format(self.table):
-                                             "{0} to {1}".format(self.since,
-                                                                 self.until)}
+                                      "{0} to {1}".format(self.since,
+                                                          self.until)}
         return json.dumps(query)
 
 
@@ -99,10 +99,6 @@ class LookerScheduleRunOperator(BaseOperator):
         json.dumps({
                 "secret_access_key":s3_creds['aws_secret_access_key']
                 }))
-        if self.load_type == 'append':
-            template['filters'] = {"{0}.created_date".format(self.table):
-                                   "{0} to {1}".format(self.since,
-                                                       self.until)}
         return json.dumps(template)
 
 

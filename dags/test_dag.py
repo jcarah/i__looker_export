@@ -3,8 +3,8 @@ import time
 # from airflow.operators import S3KeySensor
 # from airflow.operators.redshift_load_plugin import S3ToRedshiftOperator
 # from airflow.operators.s3_key_rename_plugin import S3KeyRenameOperator
-from airflow.operators.looker_schedule_run_plugin import LookerScheduleRunOperator
-
+# from airflow.operators.looker_schedule_run_plugin import LookerScheduleRunOperator
+from airflow.operators.s3_cleanup_plugin import S3CleanupOperator
 from airflow import DAG
 
 since = "{{ yesterday_ds }}".replace('-','/')
@@ -23,15 +23,23 @@ dag = DAG('looker_test',
     schedule_interval='@daily'
 )
 
-get_dashboard = LookerScheduleRunOperator(
-    task_id='testy_run',
-    looker_conn_id='looker_api',
-    table='merge_query_source_query',
-    load_type='append',
-    since=since,
-    until=until,
+s3_cleanup = S3CleanupOperator(
+    task_id='cleanup_test',
+    s3_conn_id='s3',
+    s3_bucket='jessecarah', # refactor to use meta data from connection
+    table='history',
     dag=dag
 )
+
+# get_dashboard = LookerScheduleRunOperator(
+#     task_id='testy_run',
+#     looker_conn_id='looker_api',
+#     table='merge_query_source_query',
+#     load_type='append',
+#     since=since,
+#     until=until,
+#     dag=dag
+# )
 
 # table = 'user'
 # rename = S3KeyRenameOperator(
@@ -44,4 +52,4 @@ get_dashboard = LookerScheduleRunOperator(
 # )
 
 # rename
-get_dashboard
+s3_cleanup
