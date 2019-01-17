@@ -54,7 +54,8 @@ class S3KeySensor(BaseSensorOperator):
                  CA cert bundle than the one used by botocore.
     :type verify: bool or str
     """
-    template_fields = ('bucket_key', 'bucket_name')
+    template_fields = ('bucket_key',
+                       'bucket_name')
 
     @apply_defaults
     def __init__(self,

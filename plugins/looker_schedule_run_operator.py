@@ -87,9 +87,10 @@ class LookerScheduleRunOperator(BaseOperator):
         s3_creds = self.load_s3_creds(BaseHook)
         template['name'] = table
         template['query_id'] = query_id
-        template['scheduled_plan_destination'][0]['address'] = '{}/{}/'.format(
+        template['scheduled_plan_destination'][0]['address'] = '{}/{}/{}/'.format(
             s3_creds['bucket'],
-            table)
+            table,
+            self.since)
         template['scheduled_plan_destination'][0]['parameters'] = str(
         json.dumps({
             "region":s3_creds['region'],
@@ -109,6 +110,7 @@ class LookerScheduleRunOperator(BaseOperator):
         query_id = r['id']
         schedule_body = self.build_schedule(query_id,self.table)
         r = looker_hook.run_scheduled_plan_once(schedule_body)
+        # print(json.dumps(schedule_body, indent = 4))
 
 
 class LookerScheduleRunOperatorPlugin(AirflowPlugin):
