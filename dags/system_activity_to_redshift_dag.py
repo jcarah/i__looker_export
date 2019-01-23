@@ -130,8 +130,7 @@ for table in tables:
         task_id='{0}_load'.format(table['name']),
         s3_conn_id='s3',
         s3_bucket='jessecarah',
-        s3_key='{0}/{1}/{0}.csv'.format(table['name']
-                                        since),
+        s3_key='{0}/{1}/{0}.csv'.format(table['name'],since),
         load_type=table['replication'],
         redshift_conn_id='redshift',
         redshift_schema='airflow',
