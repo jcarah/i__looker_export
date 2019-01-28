@@ -5,7 +5,9 @@ import sqlite3
 from airflow.hooks.sqlite_hook import SqliteHook
 
 def get_num_active_dagruns(dag_id, conn_id='sqlite_default'):
-    # for this you have to set this value in the airflow db
+    # if you've opted for a different backend for airflow, you will need to
+    # refactor the two lines below. For a Postgres example, please refer to
+    # https://github.com/Nextdoor/airflow_examples/blob/master/dags/util.py#L8
     airflow_db = SqliteHook(sqlite_conn_id=conn_id)
     conn = airflow_db.get_conn()
     cursor = conn.cursor()

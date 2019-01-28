@@ -48,10 +48,10 @@ tables = [
             "name": "merge_query",
             "replication": "upsert"
           },
-          # {
-          #   "name": "query",
-          #   "replication": "upsert"
-          # },
+          {
+            "name": "query",
+            "replication": "upsert"
+          },
           {
             "name": "source_query",
             "replication": "upsert"

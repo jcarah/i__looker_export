@@ -3,6 +3,7 @@ from airflow.utils.decorators import apply_defaults
 from airflow.models import BaseOperator
 from S3_hook import S3Hook
 from airflow.hooks.base_hook import BaseHook
+import logging
 
 class S3KeyRenameOperator(BaseOperator):
     """
@@ -35,16 +36,13 @@ class S3KeyRenameOperator(BaseOperator):
         s3_hook = S3Hook(self.s3_conn_id)
         # evaluate if the export exists in the specified s3 bucket
         try:
-            print('{0}/{1}/{2}'.format(self.table,
-                                        self.since,
-                                        key_prefix))
             target_key = sorted(s3_hook.list_keys(
                 bucket_name=self.s3_bucket,
                 prefix='{0}/{1}/{2}'.format(self.table,
                                             self.since,
                                             key_prefix)))[0]
         except:
-            print('Error: File does not exist in specified S3 bucket.')
+            logging.info('Error: File does not exist in specified S3 bucket.')
         # strips Looker metadata and returns a stable filename
         renamed_key = '{0}/{1}/{0}.csv'.format(self.table,
                                                self.since)
@@ -53,11 +51,12 @@ class S3KeyRenameOperator(BaseOperator):
                             renamed_key,
                             self.s3_bucket,
                             self.s3_bucket)
-        # create a separate copy for archival puposes        
+        # create a separate copy for archival puposes
         archived_key = '{0}/{1}/archive_{2}'.format(self.table,
                                                     self.since,
                                                     target_key.split('/')[2]
                                                     )
+        logging.info('Creating archive of {}'.format(archived_key))
         s3_hook.copy_object(target_key,
                             archived_key,
                             self.s3_bucket,
@@ -70,6 +69,7 @@ class S3KeyRenameOperator(BaseOperator):
                                                              self.since,
                                                              key_prefix)))
         if len(archives) >= 5:
+            logging.info('Dropping old archive, {}'.format(archives[0]))
             s3_hook.delete_objects(self.s3_bucket, archives[0])
 
 

@@ -6,6 +6,7 @@ from airflow.hooks.base_hook import BaseHook
 
 import json
 import os
+import logging
 
 class LookerScheduleRunOperator(BaseOperator):
     """
@@ -51,7 +52,7 @@ class LookerScheduleRunOperator(BaseOperator):
             query = file.read()
             file.close()
         except IOError:
-            print('Error: File, {} does not exist.'.format(filepath))
+            logging.info('Error: File, {} does not exist.'.format(filepath))
         return query
 
     def apply_filters(self,query):
@@ -80,7 +81,7 @@ class LookerScheduleRunOperator(BaseOperator):
                 '../templates/schedule_template.json')
             file = open(filepath)
         except IOError:
-            print('Error: File, {} does not exist.'.format(filepath))
+            logging.info('Error: File, {} does not exist.'.format(filepath))
 
         template = json.loads(file.read())
         file.close()
@@ -110,7 +111,6 @@ class LookerScheduleRunOperator(BaseOperator):
         query_id = r['id']
         schedule_body = self.build_schedule(query_id,self.table)
         r = looker_hook.run_scheduled_plan_once(schedule_body)
-        # print(json.dumps(schedule_body, indent = 4))
 
 
 class LookerScheduleRunOperatorPlugin(AirflowPlugin):

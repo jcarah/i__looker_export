@@ -2,6 +2,7 @@ from airflow.plugins_manager import AirflowPlugin
 from airflow.utils.decorators import apply_defaults
 from airflow.models import BaseOperator
 from S3_hook import S3Hook
+import logging
 
 
 class S3CleanupOperator(BaseOperator):
@@ -35,9 +36,6 @@ class S3CleanupOperator(BaseOperator):
         key_prefix = self.table + '_2' # this reflects Looker's naming convention
         s3_hook = S3Hook(self.s3_conn_id)
         try:
-            print('{0}/{1}/{2}'.format(self.table,
-                                       self.since,
-                                       key_prefix))
             keys_to_delete = s3_hook.list_keys(
                 bucket_name=self.s3_bucket,
                 prefix='{0}/{1}/{2}'.format(self.table,
@@ -45,16 +43,17 @@ class S3CleanupOperator(BaseOperator):
                                             key_prefix)
             )
 
-            print('Removing {0}.'.format(', '.join(keys_to_delete)))
+            logging.info('Removing {0}.'.format(', '.join(keys_to_delete)))
             s3_hook.delete_objects(
                 bucket=self.s3_bucket,
                 keys=keys_to_delete
             )
         except:
-            print('Nothing to cleanup. Moving on.')
+            logging.info('Nothing to cleanup. Moving on.')
             pass
         return
 
 class S3CleanupOperatorPlugin(AirflowPlugin):
     name = "s3_cleanup_plugin"
     operators = [S3CleanupOperator]
+    hooks = [S3Hook]

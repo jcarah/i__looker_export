@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 import requests
+import sys
 from pprint import pprint as pp
 import json
 import re
@@ -23,12 +24,29 @@ class LookerHook(BaseHook):
         self.auth()
 
     def auth(self):
+        logging.info('Authenticating')
         url = '{}{}'.format(self.host,'login')
         r = self.session.post(url,params={'client_id':self.connection.login,
                   'client_secret':self.connection.password})
+        logging.info('Request to %s => POST /api/3.0/login, %s',
+                             self.host, {'client_id': params['client_id'],
+                                         'client_secret': "[FILTERED]"})
         access_token = r.json().get('access_token')
-        print(access_token)
-        self.session.headers.update({'Authorization': 'token {}'.format(access_token)})
+        self.session.headers.update(
+                {
+                'Authorization':
+                'token {}'.format(access_token)
+                }
+            )
+        if r.status_code == requests.codes.ok:
+            logging.info('Request Complete: %s', r.status_code)
+            self.access_token = access_token
+        else:
+            logging.error('Authentication failed with status {}'.format(
+                r.status_code
+                ))
+            sys.exit(1)
+        return
 
 # POST /dashboards/{dashboard_id}/prefetch
     def create_prefetch(self, dashboard_id, ttl):
@@ -77,16 +95,19 @@ class LookerHook(BaseHook):
     # POST /queries/
     def create_query(self,query_body, fields=[]):
         url = '{}{}'.format(self.host,'queries')
-        # print(url)
-        # print(url)
         params = query_body
-        print(params)
-        print(" --- creating query --- ")
-        r = self.session.post(url,data=params, params = json.dumps({"fields": fields}))
-        # print(r.text)
-        print(r.status_code)
-        if r.status_code == requests.codes.ok:
-            return r.json()
+        logging.info('Request to {0} => POST /api/3.0/queries/{1}, {2}'.format(
+            self.host, result_format, params)
+            )
+        r = self.session.post(url,
+                             data=params,
+                             params = json.dumps({"fields": fields})
+                             )
+        try:
+            r.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            logging.error('Request failed with status {}'.format(r.status_code))
+            sys.exit(1)
 
 
       #GET      queries/run/
